@@ -1,0 +1,6 @@
+*.sdf
+*.vcxproj.user
+*.opensdf
+*.suo
+Build/
+ipch/
