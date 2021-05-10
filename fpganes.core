@@ -1,0 +1,43 @@
+CAPI=2:
+
+name : ::fpganes:0
+
+filesets:
+  rtl:
+    files:
+      - src/oam_palette.txt : {file_type : user, copyto : oam_palette.txt}
+      - src/MicroCode.v : {is_include_file : true}
+      - src/apu.v
+      - src/cpu.v
+      - src/nes_palette.txt : {file_type : user, copyto : nes_palette.txt}
+      - src/mmu.v
+      - src/ppu.v
+      - src/nes.v
+    file_type : verilogSource
+
+  nexys4:
+    files:
+      - src/hw_uart.v
+      - src/hq2x.v
+      - src/vga.v
+      - src/hw_sound.v
+      - src/clk_wiz_v3_6.v
+      - src/Nexys4_Master.ucf : {file_type : UCF}
+      - src/NES_Nexys4.v
+      - src/hw_led.v
+    file_type : verilogSource
+
+targets:
+  default:
+    filesets : [rtl]
+
+  nexys4:
+    default_tool : ise
+    filesets: [rtl, nexys4]
+    tools:
+      ise:
+        family  : Artix7
+        device  : xc7a100t
+        package : csg324
+        speed   : -1
+    toplevel : NES_Nexys4
