@@ -1,0 +1,26 @@
+name: build-apu-openlane-sky130
+on: [push]
+
+jobs:
+  build-openlane:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          path: fpganes
+      - name: Checkout pdk
+        uses: actions/checkout@v2
+        with:
+          repository: olofk/pdklite
+          path: pdklite
+      - run: echo "PDK_ROOT=$GITHUB_WORKSPACE/pdklite" >> $GITHUB_ENV
+      - run: echo "EDALIZE_LAUNCHER=${GITHUB_WORKSPACE}/openlane_runner.py" >> $GITHUB_ENV
+      - run: pip3 install --user -e "git+https://github.com/olofk/edalize.git#egg=edalize"
+      - run: pip3 install fusesoc
+      - run: docker pull efabless/openlane:v0.12
+      - run: wget https://raw.githubusercontent.com/olofk/subservient/main/openlane_runner.py
+      - run: chmod +x openlane_runner.py
+      - run: fusesoc library add fpganes $GITHUB_WORKSPACE/fpganes
+      - run: fusesoc run --target=apu-sky130 fpganes
+      

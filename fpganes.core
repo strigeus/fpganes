@@ -27,6 +27,11 @@ filesets:
       - src/hw_led.v
     file_type : verilogSource
 
+  apu-sky130:
+    files:
+      - src/apu.v : {file_type : verilogSource}
+      - data/params.tcl : {file_type : tclSource}
+
 targets:
   default:
     filesets : [rtl]
@@ -41,3 +46,8 @@ targets:
         package : csg324
         speed   : -1
     toplevel : NES_Nexys4
+
+  apu-sky130:
+    default_tool : openlane
+    filesets : [apu-sky130]
+    toplevel : APU
