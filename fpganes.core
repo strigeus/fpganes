@@ -30,7 +30,13 @@ filesets:
   apu-sky130:
     files:
       - src/apu.v : {file_type : verilogSource}
-      - data/params.tcl : {file_type : tclSource}
+      - data/apu_sky130.tcl : {file_type : tclSource}
+
+  ppu-sky130:
+    files:
+      - src/oam_palette.txt : {file_type : user, copyto : oam_palette.txt}
+      - src/ppu.v : {file_type : verilogSource}
+      - data/ppu_sky130.tcl : {file_type : tclSource}
 
 targets:
   default:
@@ -51,3 +57,8 @@ targets:
     default_tool : openlane
     filesets : [apu-sky130]
     toplevel : APU
+
+  ppu-sky130:
+    default_tool : openlane
+    filesets : [ppu-sky130]
+    toplevel : PPU
